@@ -1,9 +1,11 @@
 var express = require('express')
 let bodyParser = require('body-parser');
 
+// This generates an Express router with the supplied
+// connector and models.
 class RouteMapper {
 
-
+    // Param c is required, it defines the database connector
     constructor(c, bodyParserParams = { limit: "5mb" }) {
 
         this.router = express.Router()
@@ -16,6 +18,7 @@ class RouteMapper {
         this.connector = c
     }
 
+    // Returns router
     getRouter(){
         return this.router;
     }
@@ -33,7 +36,10 @@ class RouteMapper {
 
     params(req) {
         return {
+            // Id passed of object
+            // if applicable
             id: req.params.id,
+            // JSON data passed
             post: req.body,
             query: req.query
         }

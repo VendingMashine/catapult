@@ -4,7 +4,7 @@
   "description": "Express JS addon for writing Web APIs",
   "main": "index.js",
   "scripts": {
-    "test": "0"
+    "test": "node ./test/server.js"
   },
   "repository": {
     "type": "git",
