@@ -20,7 +20,7 @@
     "web"
   ],
   "author": "Cheikh Seck",
-  "license": "MIT",
+  "license": "GNU Lesser General Public License v2.1",
   "bugs": {
     "url": "https://github.com/VendingMashine/catapult/issues"
   },
