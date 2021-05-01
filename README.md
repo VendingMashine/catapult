@@ -55,7 +55,7 @@ Assign a route for your new endpoints
 
 ### Web Interface
 
-Once the route mapper is configured and linked to your express server, you can access your data with the following request combinations. Keep in mind that `<model name>` is the API resource name your data connector returns. The table below will assume that your router is mounted at server root.
+Once the route mapper is configured and linked to your express server, you can access your data with the following request combinations. Keep in mind that `<model name>` is the API resource name your data connector returns. The table below will assume that your router is mounted at server root. In Mongoose land, `<object id>` is the string representation of field `_id` within your MongoDB object.
 
 |Request Verb | Registered Express Path | Request Body| Result |
 |--|--| --| --|
