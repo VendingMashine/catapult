@@ -31,7 +31,8 @@ Now add a few Mongoose models to access through REST API
 	var Pet = { 
 		name: String 
 	}
-
+	
+	// resource name will be `cats`
 	const Cat = mongoose.model('Cat', Pet );
 
 	const Dog = mongoose.model('Dog', Pet );
@@ -66,5 +67,19 @@ Once the route mapper is configured and linked to your express server, you can a
 | GET  | `/<model name>/find?query=val` | N/A | Find an individual record based on query supplied.
 | DELETE  | `/<model name>/<object id>` | N/A | JSON object with success message, otherwise `null`
 
+
+Sample commands  with curl:
+
+Get all cats :
+
+	curl -XGET 'http://localhost:3000/cats'
+
+Add a new cat record :
+
+	curl -XPOST -H "Content-type: application/json" -d '{ "name" : "Fluffo" }' 'http://localhost:3000/cats'
+
+Update a cat record :
+
+	curl -XPUT -H "Content-type: application/json" -d '{ "name" : "Fluff" }' 'http://localhost:3000/cats/608d41ca30f954cbf1d11170'
 
 See the full example under test/server.js within this repository.
