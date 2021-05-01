@@ -49,7 +49,7 @@ Add the models to the route mapper.
 	RouteMapper.add(models.Cat, models.Dog)
 	var router = RouteMapper.getRouter()
 
-Assign a route for your new endpoints 
+Mount a path for your new endpoints 
 
 	app.use("/",router)
 
