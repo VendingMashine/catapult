@@ -1,5 +1,5 @@
 {
-  "name": "catapult",
+  "name": "catapult_edm",
   "version": "1.0.0",
   "description": "Express JS addon for writing Web APIs",
   "main": "index.js",

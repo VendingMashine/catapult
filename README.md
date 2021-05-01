@@ -1,13 +1,13 @@
 
 # catapult
 
-Catapult is an Web API abstraction tool. The aim of this package is to simplify adding data endpoints to a NodeJS application/server. Here is a quick guide of how this works :
+Catapult is a Web API abstraction tool. The aim of this package is to simplify adding data endpoints to a NodeJS application/server. Here is a quick guide of how this works :
 
 For the following example to work, you must have MongoDB running.
 
 ### Import package
 
-	var catapult = require("catapult")
+	var catapult = require("catapult_edm")
 
 
 ###  Setup Components
