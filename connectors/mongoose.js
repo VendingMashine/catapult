@@ -25,7 +25,7 @@ class MongooseConnector extends Catapult {
     // verb name as class method.
     delete(params) {
         let id = params.id;
-        return this.model.remove({ _id: id }).exec();
+        return this.model.deleteOne({ _id: id }).exec();
     }
 
     get(params) {
