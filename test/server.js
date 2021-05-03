@@ -12,6 +12,7 @@ var RouteMapper = new catapult.RouteMapper(catapult.MongooseConnector)
 var CoorService = new coors();
 var CounterService = new counter()
 
+
 RouteMapper.addService(CoorService, CounterService)
 RouteMapper.add(models.Cat, models.Dog)
 var router = RouteMapper.getRouter()
