@@ -34,14 +34,25 @@ class RouteMapper {
         }
     }
 
-    params(req) {
+    addService(...services) {
+
+        for (var i = services.length - 1; i >= 0; i--) {
+            var s = services[i]
+            this.mapService(s)
+        }
+
+    }
+
+    params(req, res) {
         return {
             // Id passed of object
             // if applicable
             id: req.params.id,
             // JSON data passed
             post: req.body,
-            query: req.query
+            query: req.query,
+            req,
+            res
         }
     }
 
@@ -49,13 +60,39 @@ class RouteMapper {
     // Abstracts express request handling
     async handle(connector, method, req, res, next) {
         try {
-            let params = this.params(req)
+
+            if (!connector[method]) {
+                return next()
+            }
+
+            let params = this.params(req, res)
             var results = await connector[method](params)
             return res.json(results)
 
         } catch (e) {
-            next(e)
+            return next(e)
         }
+    }
+
+    mapService(service) {
+
+        var apiName = service.getName()
+
+        var handler = async (req, res, next) => {
+            var verb = req.method.toLowerCase()
+            return this.handle(service, verb, req, res, next)
+        }
+
+        if(!apiName){
+            this.router.use(handler)
+            return;
+        }
+
+        // Handle all requests towards api,
+        // the request verb passed is used as the 
+        // class method
+        this.router.route(`/${apiName}`)
+            .all(handler)
     }
 
     map(model) {
@@ -63,6 +100,8 @@ class RouteMapper {
         // set the model and return resource name
         // to be used in path
         var apiName = connector.setModel(model)
+
+        
 
         // Handle all requests towards api,
         // the request verb passed is used as the 

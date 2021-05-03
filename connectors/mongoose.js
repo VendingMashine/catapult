@@ -22,7 +22,7 @@ class MongooseConnector extends Catapult {
 
     // To handle extra HTTP request
     // verbs, you may simply add the request
-    // verb name as class method.
+    // verb name as a class method.
     delete(params) {
         let id = params.id;
         return this.model.deleteOne({ _id: id }).exec();
@@ -30,9 +30,15 @@ class MongooseConnector extends Catapult {
 
     get(params) {
         let id = params.id;
-        let queryLength = Object.keys(params.query ? params.query : {});
+        let queryLength = params.query ? Object.keys(params.query) : 0;
         let query = queryLength == 0 ? { _id: id } : params.query;
         return this.model.findOne(query).exec();
+    }
+
+    getQuery(params, def = {}){
+        let queryLength = params.query ? Object.keys(params.query) : 0;
+        let query = queryLength == 0 ? def : params.query;
+        return query
     }
 
     put(params) {
