@@ -19,7 +19,7 @@ class RouteMapper {
     }
 
     // Returns router
-    getRouter(){
+    getRouter() {
         return this.router;
     }
 
@@ -45,53 +45,36 @@ class RouteMapper {
         }
     }
 
+    async handle(connector, method, req, res, next) {
+        try {
+
+            var params = this.params(req)
+            var results = await connector[method](params)
+            return res.json(results)
+
+        } catch (e) {
+            next(e)
+        }
+    }
+
     map(model) {
-        var connector = new this.connector()
+        let connector = new this.connector()
 
         var apiName = connector.setModel(model)
 
         // Handle all requests towards api
         this.router.route(`/${apiName}/:id`)
             .all(async (req, res, next) => {
-
-                try {
-
-                    // Pass request verb as method name, in lowercase
-                    var verb = req.method.toLowerCase()
-                    var params = this.params(req)
-
-                    var result = await connector[verb](params)
-
-                    return res.json(result)
-
-                } catch (e) {
-                    // pass error to next handler
-                    next(e)
-                }
+                var verb = req.method.toLowerCase()
+                return this.handle(connector, verb, req, res, next)
             })
 
         this.router.route(`/${apiName}`)
             .get(async (req, res, next) => {
-
-                try {
-                    var params = this.params(req)
-                    var results = await connector.getAll(params)
-                    return res.json(results)
-
-                } catch (e) {
-                    next(e)
-                }
+                return this.handle(connector, "getAll", req, res, next)
             })
             .post(async (req, res, next) => {
-
-                try {
-                    var params = this.params(req)
-                    var result = await connector.add(params)
-                    return res.json(result)
-
-                } catch (e) {
-                    next(e)
-                }
+                return this.handle(connector, "add", req, res, next)
             })
     }
 }
