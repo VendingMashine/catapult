@@ -45,10 +45,11 @@ class RouteMapper {
         }
     }
 
+
+    // Abstracts express request handling
     async handle(connector, method, req, res, next) {
         try {
-
-            var params = this.params(req)
+            let params = this.params(req)
             var results = await connector[method](params)
             return res.json(results)
 
@@ -59,10 +60,13 @@ class RouteMapper {
 
     map(model) {
         let connector = new this.connector()
-
+        // set the model and return resource name
+        // to be used in path
         var apiName = connector.setModel(model)
 
-        // Handle all requests towards api
+        // Handle all requests towards api,
+        // the request verb passed is used as the 
+        // class method
         this.router.route(`/${apiName}/:id`)
             .all(async (req, res, next) => {
                 var verb = req.method.toLowerCase()

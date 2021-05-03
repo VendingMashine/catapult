@@ -42,7 +42,7 @@ class Catapult {
         		message = "getAll(params) is required. Retrieves an object list."
         	break;
             default:
-
+            	message = "Unknown"
             break;
         }
 
