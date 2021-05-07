@@ -24,14 +24,14 @@ class MongooseConnector extends Catapult {
     // verbs, you may simply add the request
     // verb name as a class method.
     delete(params) {
-        let id = params.id;
-        return this.model.deleteOne({ _id: id }).exec();
+        let _id = params.id;
+        let query = this.getQuery(params, { _id })
+        return this.model.deleteOne(query).exec();
     }
 
     get(params) {
-        let id = params.id;
-        let queryLength = params.query ? Object.keys(params.query) : 0;
-        let query = queryLength == 0 ? { _id: id } : params.query;
+        let _id = params.id;
+        let query = this.getQuery(params, { _id })
         return this.model.findOne(query).exec();
     }
 
@@ -42,23 +42,22 @@ class MongooseConnector extends Catapult {
     }
 
     put(params) {
-        let id = params.id;
+        let _id = params.id;
         let data = params.post;
+        let query = this.getQuery(params, { _id })
 
         delete data.createdAt;
 
         delete data._id;
         data.updatedAt = new Date();
 
-        return this.model.update({ _id: id }, {
+        return this.model.update(query, {
          $set: data 
         }, { multi: true }).exec();
     }
 
     getAll(params) {
-
-        let queryLength = Object.keys(params.query ? params.query : {});
-        let query = queryLength == 0 ? { } : params.query;
+        let query = this.getQuery(params, {})
         return this.model.find(query).exec();
     }
 
