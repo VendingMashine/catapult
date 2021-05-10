@@ -33,7 +33,7 @@ class MongooseConnector extends Catapult {
         let postData = params.post;
 
         if(Array.isArray(postData)){
-            return bulkInsert(postData);
+            return this.bulkInsert(postData);
         }
 
         postData.createdAt = new Date();

@@ -30,9 +30,24 @@ describe('POST /teazers', function() {
             .then(response => {
                 assert(response.body.name, 'john')
 
-                if(!response.body._id){
-                	throw "Failed "
+                if (!response.body._id) {
+                    throw "Failed "
                 }
+
+                done();
+            })
+            .catch(err => done(err))
+    });
+
+    it('should add new items in bulk', function(done) {
+        request(app)
+            .post('/teazers')
+            .send([{ name: 'john' }, { name: 'tom' }])
+            .set('Accept', 'application/json')
+            .expect('Content-Type', /json/)
+            .expect(200)
+            .then(response => {
+
 
                 done();
             })
