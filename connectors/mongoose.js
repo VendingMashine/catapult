@@ -12,8 +12,29 @@ class MongooseConnector extends Catapult {
         return this.apiName;
     }
 
+
+    async bulkInsert(data){
+
+        var endResult = [];
+
+        for (var i = data.length - 1; i >= 0; i--) {
+            var row = data[i]
+            row.createdAt = new Date();
+
+            var result = await this.model.create(row);
+            endResult.push(result);
+        }
+
+
+        return endResult;
+    }
+
     add(params) {
         let postData = params.post;
+
+        if(Array.isArray(postData)){
+            return bulkInsert(postData);
+        }
 
         postData.createdAt = new Date();
 
@@ -26,7 +47,7 @@ class MongooseConnector extends Catapult {
     delete(params) {
         let _id = params.id;
         let query = this.getQuery(params, { _id })
-        return this.model.deleteOne(query).exec();
+        return this.model.deleteMany(query).exec();
     }
 
     get(params) {
@@ -41,10 +62,24 @@ class MongooseConnector extends Catapult {
         return query
     }
 
+    putWithOperator(query, update){
+         return this.model.update(query, update, { multi: true }).exec();
+    }
+
     put(params) {
         let _id = params.id;
         let data = params.post;
         let query = this.getQuery(params, { _id })
+
+        //Extract object keys to determine
+        // if a top level key has an operator
+        // flag.
+        var keyAsOp = Object.keys(data)
+        .filter( val => { return val.includes("$") })
+
+        if(keyAsOp.length > 0){
+            return putWithOperator(query, data);
+        }
 
         delete data.createdAt;
 

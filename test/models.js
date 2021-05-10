@@ -7,7 +7,8 @@ mongoose.connect(
 );
 
 var Pet = { 
-	name: String 
+	name: String,
+	Age : Number
 }
 
 const Cat = mongoose.model('Cat', Pet );

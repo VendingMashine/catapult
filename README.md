@@ -60,7 +60,7 @@ Once the route mapper is configured and linked to your express server, you can a
 
 |Request Verb | Registered Express Path | Request Body| Result |
 |--|--| --| --|
-| POST | `/<model name>`  | JSON string of object to add. `{ "name" : "Fluffo" }` with the models defined above in mind | Newly created object. As a json string. |
+| POST | `/<model name>`  | JSON string of object to add. `{ "name" : "Fluffo" }` with the models defined above in mind | Newly created object. As a json string. Submit an Array to bulk insert items. ie : `[{ "name" : "Fluffo"}]` |
 | GET  | `/<model name>?query=val` | N/A | A list of objects. Query parameters are optional, but can be used to filter results based on a passed string value.
 | PUT  | `/<model name>/<object id>`  | JSON string with object updates | JSON object with success message.
 | GET  | `/<model name>/<object id>` | N/A | JSON object with the ID of the requested object. `null` is returned if the object is not found.
@@ -83,3 +83,5 @@ Update a cat record :
 	curl -XPUT -H "Content-type: application/json" -d '{ "name" : "Fluff" }' 'http://localhost:3000/cats/608d41ca30f954cbf1d11170'
 
 See the full example under test/server.js within this repository.
+
+### [NEW] Web Services
