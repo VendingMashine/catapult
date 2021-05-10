@@ -10,7 +10,7 @@ class Teazer {
 
     constructor() {
         this.tableData = []
-        this.collection = { collectionName: "Teazer" }
+        this.collection = { collectionName: "teazers" }
     }
 
     async create(data) {
@@ -43,7 +43,7 @@ class Teazer {
             if(matchedAll){
             	results.push(index)
             }
-            
+
         })
 
         return results
@@ -89,4 +89,11 @@ class Teazer {
         return this.wrapExec(result)
     }
 
+    find(query) {
+        var results = this.query(query)
+        return this.wrapExec(results)
+    }
+
 }
+
+module.exports = Teazer
