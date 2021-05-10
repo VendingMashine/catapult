@@ -77,7 +77,7 @@ class Teazer {
     wrapExec(result) {
         return {
             exec: () => {
-                new Promise((resolve) => {
+                return new Promise((resolve) => {
                     resolve(result)
                 })
             }
@@ -92,6 +92,14 @@ class Teazer {
     find(query) {
         var results = this.query(query)
         return this.wrapExec(results)
+    }
+
+    deleteMany(query){
+    	return this.wrapExec({})
+    }
+
+    update(query, update, params){
+    	return this.wrapExec({})
     }
 
 }
