@@ -82,6 +82,3 @@ Update a cat record :
 
 	curl -XPUT -H "Content-type: application/json" -d '{ "name" : "Fluff" }' 'http://localhost:3000/cats/608d41ca30f954cbf1d11170'
 
-See the full example under test/server.js within this repository.
-
-### [NEW] Web Services
